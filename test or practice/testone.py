@@ -46,7 +46,8 @@ def main():
 
         if i==3:
             print "I'm a boss at this now!"
-
+    if True:
+        print "hello i learned this form when direwolf20 played with computer craft in this seson 3 lp!"
     # ends here
 
     
