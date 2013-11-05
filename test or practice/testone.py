@@ -11,7 +11,7 @@
 ##----------------------------------------------------------------------
 
 """
-this is a test to see if i can use this program :D
+this is a test to see if i can use this program :D lets see if you computer handle this maddness!
 """
 
 import sys
@@ -48,6 +48,16 @@ def main():
             print "I'm a boss at this now!"
     if True:
         print "hello i learned this form when direwolf20 played with computer craft in this seson 3 lp!"
+
+
+    i=1
+    n=2
+
+    while n > 0:
+        print "n=%d, i=%d" % (n,i)
+        #n=n+-011101010101010110101010011010011555551011010101001011010100001011001013466777
+        n=n*n
+        i=i+1
     # ends here
 
     
