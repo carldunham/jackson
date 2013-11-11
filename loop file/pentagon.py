@@ -1,10 +1,12 @@
 import turtle
+import math
 from random import *
 
-sides = randint(3,20)
-count = randint(10,100)
-size = randint(1,100)
+sides = 5.564564357453685468973543765874547563876
+di = 200
+count = sides
 
+size = (3.1415926 * di) / sides
 turn = 360 / count
 angle = 360 / sides
 
@@ -14,19 +16,19 @@ print("sides=%d, count=%d, size=%d" % (sides, count, size))
 
 t = turtle.Pen()
 
-for i in range(count):
+while True:
     r = random()
     g = random()
     b = random()
 
     t.color(r,g,b)
 
-    t.begin_fill()
+    #t.begin_fill()
 
-    for j in range(sides):
+    for j in range(round(sides)):
         t.left(angle)
         t.forward(size)
 
-    t.end_fill()
+    #t.end_fill()
 
     t.left(turn)
