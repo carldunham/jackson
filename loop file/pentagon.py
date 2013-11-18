@@ -4,8 +4,8 @@ from random import *
 
 π = math.pi
 
-sides = [10, 5, 4, 8]
-di = [200, 30, 40, 100]
+sides = [5, 5, 5, 5]
+di = [100, 200, 300, 400]
 count = sides
 
 size = [0, 1, 2, 3]
@@ -50,3 +50,7 @@ for cnt in range(max(count)):
             if fill: t[i].end_fill()
 
             t[i].left(turn[i])
+
+for i in range(len(sides)):
+    t[i].up()
+    t[i].forward(1000)
