@@ -2,33 +2,51 @@ import turtle
 import math
 from random import *
 
-sides = 5.564564357453685468973543765874547563876
-di = 200
+π = math.pi
+
+sides = [10, 5, 4, 8]
+di = [200, 30, 40, 100]
 count = sides
 
-size = (3.1415926 * di) / sides
-turn = 360 / count
-angle = 360 / sides
+size = [0, 1, 2, 3]
+turn = [0, 1, 2, 3]
+angle = [0, 1, 2, 3]
 
-print("sides=%d, count=%d, size=%d" % (sides, count, size))
+fill = False
+
+for i in range(len(sides)):
+    size[i] = (π * di[i]) / sides[i]
+    turn[i] = 360 / count[i]
+    angle[i] = 360 / sides[i]
+
+    print("i=%d, sides=%d, count=%d, ipπππππpi size=%d" % (i, sides[i], count[i], size[i]))
 
 # ONLY MULTIPLUS OF 360 IN TURN VARIABLE
 
-t = turtle.Pen()
+t = [0, 1, 2, 3]
 
-while True:
-    r = random()
-    g = random()
-    b = random()
+for i in range(len(sides)):
+    t[i] = turtle.Pen()
 
-    t.color(r,g,b)
 
-    #t.begin_fill()
 
-    for j in range(round(sides)):
-        t.left(angle)
-        t.forward(size)
+for cnt in range(max(count)):
 
-    #t.end_fill()
+    for i in range(len(sides)):
 
-    t.left(turn)
+        if cnt < count[i]:
+            r = random()
+            g = random()
+            b = random()
+
+            t[i].color(r,g,b)
+
+            if fill: t[i].begin_fill()
+
+            for j in range(round(sides[i])):
+                t[i].left(angle[i])
+                t[i].forward(size[i])
+    
+            if fill: t[i].end_fill()
+
+            t[i].left(turn[i])
