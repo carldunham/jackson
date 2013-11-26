@@ -14,11 +14,13 @@ tk.update()
 
 
 
-ball = Ball(canvas, 'blue')
+
 paddle = Paddle(canvas, 'green')
+ball = Ball(canvas, 'blue')
 while 1:
     paddle.draw()
     ball.draw()
+    ball.check(paddle)
     tk.update_idletasks()
     tk.update()
     time.sleep(0.00000001)
