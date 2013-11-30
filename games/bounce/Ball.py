@@ -11,6 +11,8 @@ class Ball:
                 random.shuffle(starts)
                 self.x = starts[0]
                 self.y = starts[1]
+                self.score = 0
+                self.canvas.create_text(10, 200, text=self.score)
                 self.canvas_height = self.canvas.winfo_height()
                 self.canvas_width = self.canvas.winfo_width()
 
@@ -21,13 +23,19 @@ class Ball:
             paddle_pos = paddle.coords()
             ball_pos = self.coords()
             
-            if (ball_pos[2] >= paddle_pos[0]) and (ball_pos[0] <= paddle_pos[2]):
-                    
-                if ((ball_pos[3] >= paddle_pos[1]) and (ball_pos[3] <= paddle_pos[3])) or ((ball_pos[1] >= paddle_pos[1]) and (ball_pos[1] <= paddle_pos[3])):
+            if (((ball_pos[2] >= paddle_pos[0]) and (ball_pos[0] <= paddle_pos[2])) and                    
+                (((ball_pos[3] >= paddle_pos[1]) and (ball_pos[3] <= paddle_pos[3])) or
+                 ((ball_pos[1] >= paddle_pos[1]) and (ball_pos[1] <= paddle_pos[3])))):
                         self.y = -self.y
+                        self.score = self.score + 1
+                        print(self.score)
                         
-                
-            
+            elif (((ball_pos[3] >= paddle_pos[1]) and (ball_pos[1] <= paddle_pos[3])) and                    
+                (((ball_pos[2] >= paddle_pos[0]) and (ball_pos[2] <= paddle_pos[2])) or
+                 ((ball_pos[0] >= paddle_pos[0]) and (ball_pos[0] <= paddle_pos[2])))):
+                        self.x = -self.x
+                        self.score = self.score + 1
+                                        
 
         def draw(self):
             self.canvas.move(self.id, self.x, self.y)

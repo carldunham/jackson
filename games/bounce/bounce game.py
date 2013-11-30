@@ -23,5 +23,5 @@ while 1:
     ball.check(paddle)
     tk.update_idletasks()
     tk.update()
-    time.sleep(0.00000001)
+    time.sleep(0.001)
  

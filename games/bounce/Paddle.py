@@ -6,7 +6,7 @@ class Paddle:
 
     def __init__(self, canvas, color):
         self.canvas = canvas
-        self.id = canvas.create_rectangle(0, 0, 100, 10, fill=color)
+        self.id = canvas.create_rectangle(0, 0, 100, 30, fill=color)
         self.canvas.move(self.id, 200, 300)
         canvas.bind_all('<KeyPress-Left>', self.move_left)
         canvas.bind_all('<KeyPress-Right>', self.move_right)
