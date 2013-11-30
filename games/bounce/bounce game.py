@@ -17,11 +17,11 @@ tk.update()
 paddle = Paddle(canvas, 'green')
 ball = Ball(canvas, 'blue')
 
-while 1:
+def tick():
     paddle.draw()
     ball.draw()
     ball.check(paddle)
-    tk.update_idletasks()
-    tk.update()
-    time.sleep(0.01)
- 
+    tk.after(10, tick) 
+
+tk.after(10, tick)
+tk.mainloop()
