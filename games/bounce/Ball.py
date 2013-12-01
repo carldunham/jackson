@@ -12,7 +12,7 @@ class Ball:
                 random.shuffle(starts)
                 self.y = starts[0]
                 self.score = 0
-                self.score_id = self.canvas.create_text(10, 200, text=self.score)
+                self.score_id = self.canvas.create_text(50, 200, text=self.score)
                 self.canvas_height = self.canvas.winfo_height()
                 self.canvas_width = self.canvas.winfo_width()
 
