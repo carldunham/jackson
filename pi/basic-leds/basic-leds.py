@@ -4,10 +4,11 @@ import logging
 import RPi.GPIO as GPIO
 import time
 
+logging.basicConfig(level='INFO')
 GPIO.setmode(GPIO.BCM)
 
-ON = 1
-OFF = 0
+ON = GPIO.HIGH
+OFF = GPIO.LOW
 
 LED_R = 12
 LED_G = 16
@@ -41,4 +42,7 @@ while True:
 
 logging.info("done.")
 
+GPIO.output(LED_R, OFF)
+GPIO.output(LED_G, OFF)
+GPIO.output(LED_B, OFF)
 GPIO.cleanup()
