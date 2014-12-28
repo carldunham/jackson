@@ -27,7 +27,7 @@ def main():
 
     opts = parser.parse_args()
 
-    logger.basicConfig(level=opts.debug)
+    logging.basicConfig(level=opts.debug)
     logger.debug('opts="%s"',  opts)
 
     plugin = importlib.import_module('plugins.{}'.format(opts.plugin))
@@ -38,7 +38,7 @@ def main():
     control.setup(button_function=_handle_button)
     plugin.setup()
 
-    logging.info("Starting...")
+    logger.info("Starting...")
 
     while True:
 
@@ -52,10 +52,10 @@ def main():
             break
 
         except Exception, e:
-            logging.exception(e)
+            logger.exception(e)
             break
 
-    logging.info("done.")
+    logger.info("done.")
 
     plugin.teardown()
     control.teardown()
