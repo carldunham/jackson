@@ -1,4 +1,5 @@
 
+import logging
 import RPi.GPIO as GPIO
 
 ON = GPIO.HIGH
@@ -16,6 +17,8 @@ RIGHT_BUTTON = 25
 
 ALL_BUTTONS = [RESET_BUTTON, LEFT_BUTTON, RIGHT_BUTTON]
 
+logger = logging.getLogger(__name__)
+
 
 def setup(button_function=None):
     GPIO.setmode(GPIO.BCM)
@@ -27,8 +30,8 @@ def setup(button_function=None):
     if button_function:
 
         for b in ALL_BUTTONS:
-            GPIO.add_event_detect(b, GPIO.FALLING)
-            GPIO.add_event_callback(b, button_function)
+            logger.debug("setting up callback on button %d", b)
+            GPIO.add_event_detect(b, GPIO.FALLING, callback=button_function)
 
 
 def teardown():
