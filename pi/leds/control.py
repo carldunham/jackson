@@ -17,16 +17,16 @@ RIGHT_BUTTON = 25
 ALL_BUTTONS = [RESET_BUTTON, LEFT_BUTTON, RIGHT_BUTTON]
 
 
-def setup(handle_function=None):
+def setup(button_function=None):
     GPIO.setmode(GPIO.BCM)
 
     GPIO.setup(ALL_LEDS, GPIO.OUT, initial=OFF)
 
     GPIO.setup(ALL_BUTTONS, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
-    if handle_function:
+    if button_function:
         GPIO.add_event_detect(ALL_BUTTONS, GPIO.FALLING)
-        GPIO.add_event_callback(ALL_BUTTONS, handle_function)
+        GPIO.add_event_callback(ALL_BUTTONS, button_function)
 
 
 def teardown():
