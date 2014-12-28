@@ -2,7 +2,7 @@
 import logging
 import time
 
-from .. import control
+import control
 
 INTERVAL = 0.5   # seconds
 
