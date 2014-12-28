@@ -3,7 +3,6 @@
 import argparse
 import logging
 import RPi.GPIO as GPIO
-import time
 
 ON = GPIO.HIGH
 OFF = GPIO.LOW
@@ -12,7 +11,7 @@ LED_R = 12
 LED_G = 16
 LED_B = 21
 
-DEFAULT_INTERVAL = 1   # in seconds
+ALL_LEDS = [LED_R, LED_G, LED_B]
 
 logger = logging.getLogger(__name__)
 
@@ -32,41 +31,47 @@ def teardown():
     GPIO.cleanup()
 
 
+def pin(which, on=True):
+    GPIO.output(which, ON if on else OFF)
+
+
+def red(on=True):
+    pin(LED_R, on)
+
+
+def green(on=True):
+    pin(LED_G, on)
+
+
+def blue(on=True):
+    pin(LED_B, on)
+
+
 def alloff():
-    GPIO.output(LED_R, OFF)
-    GPIO.output(LED_G, OFF)
-    GPIO.output(LED_B, OFF)
-
-
-def counter(interval=DEFAULT_INTERVAL):
-
-    for i in xrange(8):
-        logging.info("  %d", i)
-
-        GPIO.output(LED_R, ON if i & 0b100 else OFF)
-        GPIO.output(LED_G, ON if i & 0b010 else OFF)
-        GPIO.output(LED_B, ON if i & 0b001 else OFF)
-
-        time.sleep(interval)
+    [pin(p, OFF) for p in ALL_LEDS]
 
 
 def main():
     parser = argparse.ArgumentParser(description='Control red, green and blue LEDs')
     parser.add_argument('-d', '--debug', type=str, default='INFO', help='set debug level to DEBUG (default: %(default)s)')
+    parser.add_argument('-p', '--plugin', type=str, default='counter', help='Which plugin to run (default: %(default)s)')
 
     opts = parser.parse_args()
 
     logging.basicConfig(level=opts.debug)
     logger.debug('opts="%s"',  opts)
 
+    plugin = __import__('plugins', fromlist=[opts.plugin])
+
     setup()
+    plugin.setup()
 
     logging.info("Starting...")
 
     while True:
 
         try:
-            counter()
+            plugin.step()
 
         except KeyboardInterrupt:
             break
@@ -76,6 +81,7 @@ def main():
 
     logging.info("done.")
 
+    plugin.teardown()
     teardown()
 
 
