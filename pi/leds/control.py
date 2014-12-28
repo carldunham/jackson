@@ -25,8 +25,10 @@ def setup(button_function=None):
     GPIO.setup(ALL_BUTTONS, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
     if button_function:
-        GPIO.add_event_detect(ALL_BUTTONS, GPIO.FALLING)
-        GPIO.add_event_callback(ALL_BUTTONS, button_function)
+
+        for b in ALL_BUTTONS:
+            GPIO.add_event_detect(b, GPIO.FALLING)
+            GPIO.add_event_callback(b, button_function)
 
 
 def teardown():
