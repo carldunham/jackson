@@ -1,11 +1,11 @@
-#!/bin/env python
+#!/usr/bin/env python
 
+import argparse
 import logging
 import RPi.GPIO as GPIO
 import time
 
-logging.basicConfig(level='INFO')
-GPIO.setmode(GPIO.BCM)
+DEBUG = 0
 
 ON = GPIO.HIGH
 OFF = GPIO.LOW
@@ -16,33 +16,55 @@ LED_B = 21
 
 INTERVAL = 1   # in seconds
 
-GPIO.setup(LED_R, GPIO.OUT)
-GPIO.setup(LED_G, GPIO.OUT)
-GPIO.setup(LED_B, GPIO.OUT)
+logger = logging.getLogger(__name__)
 
-logging.info("Starting...")
+def main():
+    parser = argparse.ArgumentParser(description='Control red, green and blue LEDs')
+    parser.add_argument('-d', '--debug', type=str, default='INFO', help='set debug level to DEBUG (default: %(default)s)')
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument('-q', '--quiet', action='store_true')
+    group.add_argument('-v', '--verbose', action='store_true')
 
-while True:
+    opts = parser.parse_args()
 
-    try:
-        for i in xrange(0, 8):
-            logging.info("  %d", i)
+    global DEBUG
+    DEBUG = opts.debug
 
-            GPIO.output(LED_R, ON if i & 0b100 else OFF)
-            GPIO.output(LED_G, ON if i & 0b010 else OFF)
-            GPIO.output(LED_B, ON if i & 0b001 else OFF)
+    logging.basicConfig(level='INFO')
+    logger.debug('opts="%s"',  opts)
 
-            time.sleep(INTERVAL)
-    except KeyboardInterrupt:
-        break
+    GPIO.setmode(GPIO.BCM)
 
-    except:
-        logging.exception()
-        break
+    GPIO.setup(LED_R, GPIO.OUT)
+    GPIO.setup(LED_G, GPIO.OUT)
+    GPIO.setup(LED_B, GPIO.OUT)
+    
+    logging.info("Starting...")
+    
+    while True:
+    
+        try:
+            for i in xrange(0, 8):
+                logging.info("  %d", i)
+    
+                GPIO.output(LED_R, ON if i & 0b100 else OFF)
+                GPIO.output(LED_G, ON if i & 0b010 else OFF)
+                GPIO.output(LED_B, ON if i & 0b001 else OFF)
+    
+                time.sleep(INTERVAL)
+        except KeyboardInterrupt:
+            break
+    
+        except:
+            logging.exception()
+            break
+    
+    logging.info("done.")
+    
+    GPIO.output(LED_R, OFF)
+    GPIO.output(LED_G, OFF)
+    GPIO.output(LED_B, OFF)
+    GPIO.cleanup()
 
-logging.info("done.")
-
-GPIO.output(LED_R, OFF)
-GPIO.output(LED_G, OFF)
-GPIO.output(LED_B, OFF)
-GPIO.cleanup()
+if __name__ == '__main__':
+    main()
