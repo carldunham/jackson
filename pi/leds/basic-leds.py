@@ -2,6 +2,7 @@
 
 import argparse
 import logging
+import importlib
 
 import control
 
@@ -18,7 +19,7 @@ def main():
     logging.basicConfig(level=opts.debug)
     logger.debug('opts="%s"',  opts)
 
-    plugin = __import__('plugins', fromlist=[opts.plugin])
+    plugin = importlib.import_module('plugins.{}'.format(opts.plugin))
 
     control.setup()
     plugin.setup()
