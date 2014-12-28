@@ -2,7 +2,7 @@
 import logging
 import time
 
-from .. import control
+import control
 
 
 def setup():
