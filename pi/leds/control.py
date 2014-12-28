@@ -14,16 +14,16 @@ ALL_LEDS = [LED_R, LED_G, LED_B]
 def setup():
     GPIO.setmode(GPIO.BCM)
 
-    GPIO.setup(LED_R, GPIO.OUT)
-    GPIO.setup(LED_G, GPIO.OUT)
-    GPIO.setup(LED_B, GPIO.OUT)
-
-    alloff()
+    GPIO.setup(ALL_LEDS, GPIO.OUT, initial=OFF)
 
 
 def teardown():
     alloff()
     GPIO.cleanup()
+
+
+def get(which):
+    GPIO.input(which)
 
 
 def set(which, on=True):
@@ -36,6 +36,10 @@ def on(which):
 
 def off(which):
     set(which, OFF)
+
+
+def toggle(which):
+    set(which, not get(which))
 
 
 def red(on=True):
@@ -51,7 +55,7 @@ def blue(on=True):
 
 
 def all(on=True):
-    [set(p, on) for p in ALL_LEDS]
+    set(ALL_LEDS, on)
 
 
 def allon():
