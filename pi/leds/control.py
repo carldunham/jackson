@@ -26,24 +26,32 @@ def teardown():
     GPIO.cleanup()
 
 
-def pin(which, on=True):
+def set(which, on=True):
     GPIO.output(which, ON if on else OFF)
 
 
+def on(which):
+    set(which, ON)
+
+
+def off(which):
+    set(which, OFF)
+
+
 def red(on=True):
-    pin(LED_R, on)
+    set(LED_R, on)
 
 
 def green(on=True):
-    pin(LED_G, on)
+    set(LED_G, on)
 
 
 def blue(on=True):
-    pin(LED_B, on)
+    set(LED_B, on)
 
 
 def all(on=True):
-    [pin(p, on) for p in ALL_LEDS]
+    [set(p, on) for p in ALL_LEDS]
 
 
 def allon():
