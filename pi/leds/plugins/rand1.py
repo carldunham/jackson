@@ -19,6 +19,7 @@ def step(interval):
     n = random.choice(control.ALL_LEDS)
 
     control.alloff()
-    control.on(n)
+    time.sleep(0.1)  # so we can see repeats
 
+    control.on(n)
     time.sleep(interval)
