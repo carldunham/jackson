@@ -8,11 +8,14 @@ import control
 
 logger = logging.getLogger(__name__)
 
+DEFAULT_INTERVAL = 0.5   # seconds
+
 
 def main():
     parser = argparse.ArgumentParser(description='Control red, green and blue LEDs')
     parser.add_argument('-d', '--debug', type=str, default='INFO', help='set debug level to DEBUG (default: %(default)s)')
     parser.add_argument('-p', '--plugin', type=str, default='counter', help='Which plugin to run (default: %(default)s)')
+    parser.add_argument('-i', '--inteval', type=str, default=DEFAULT_INTERVAL, help='seconds between steps (default: %(default)s)')
 
     opts = parser.parse_args()
 
@@ -29,7 +32,7 @@ def main():
     while True:
 
         try:
-            plugin.step()
+            plugin.step(opts.interval)
 
         except KeyboardInterrupt:
             break
