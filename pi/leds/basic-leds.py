@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import time
 import argparse
 import logging
 import importlib
@@ -10,6 +11,13 @@ logger = logging.getLogger(__name__)
 
 DEFAULT_INTERVAL = 0.5   # seconds
 
+_interval = DEFAULT_INTERVAL
+_pause = False
+
+
+def _handle_button(button):
+    logger.info("Button Press: %d", button)
+
 
 def main():
     parser = argparse.ArgumentParser(description='Control red, green and blue LEDs')
@@ -19,13 +27,15 @@ def main():
 
     opts = parser.parse_args()
 
-    logging.basicConfig(level=opts.debug)
+    logger.basicConfig(level=opts.debug)
     logger.debug('opts="%s"',  opts)
 
     plugin = importlib.import_module('plugins.{}'.format(opts.plugin))
-    interval = float(opts.interval)
 
-    control.setup()
+    global _interval
+    _interval = float(opts.interval)
+
+    control.setup(button_function=_handle_button)
     plugin.setup()
 
     logging.info("Starting...")
@@ -33,7 +43,10 @@ def main():
     while True:
 
         try:
-            plugin.step(interval)
+            if _pause:
+                time.sleep(1)
+            else:
+                plugin.step(_interval)
 
         except KeyboardInterrupt:
             break
