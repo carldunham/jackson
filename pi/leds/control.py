@@ -42,5 +42,13 @@ def blue(on=True):
     pin(LED_B, on)
 
 
+def all(on=True):
+    [pin(p, on) for p in ALL_LEDS]
+
+
+def allon():
+    all(ON)
+
+
 def alloff():
-    [pin(p, OFF) for p in ALL_LEDS]
+    all(OFF)
