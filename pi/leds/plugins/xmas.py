@@ -32,4 +32,4 @@ def step(interval):
     control.green(n & 0b010)
     control.blue(n & 0b001)
 
-    time.sleep(interval * random.gauss(0.0, 0.5))
+    time.sleep(max(interval * random.gauss(1.0, 0.5), 0.2))
