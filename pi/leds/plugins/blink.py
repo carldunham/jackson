@@ -13,8 +13,8 @@ def teardown():
 
 
 def step(interval):
-    control.allon())
+    control.allon()
     time.sleep(interval)
 
-    control.alloff())
+    control.alloff()
     time.sleep(interval)
