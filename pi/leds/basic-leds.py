@@ -23,6 +23,7 @@ def main():
     logger.debug('opts="%s"',  opts)
 
     plugin = importlib.import_module('plugins.{}'.format(opts.plugin))
+    interval = float(opts.interval)
 
     control.setup()
     plugin.setup()
@@ -32,7 +33,7 @@ def main():
     while True:
 
         try:
-            plugin.step(opts.interval)
+            plugin.step(interval)
 
         except KeyboardInterrupt:
             break
