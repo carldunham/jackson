@@ -2,53 +2,10 @@
 
 import argparse
 import logging
-import RPi.GPIO as GPIO
 
-ON = GPIO.HIGH
-OFF = GPIO.LOW
-
-LED_R = 12
-LED_G = 16
-LED_B = 21
-
-ALL_LEDS = [LED_R, LED_G, LED_B]
+import control
 
 logger = logging.getLogger(__name__)
-
-
-def setup():
-    GPIO.setmode(GPIO.BCM)
-
-    GPIO.setup(LED_R, GPIO.OUT)
-    GPIO.setup(LED_G, GPIO.OUT)
-    GPIO.setup(LED_B, GPIO.OUT)
-
-    alloff()
-
-
-def teardown():
-    alloff()
-    GPIO.cleanup()
-
-
-def pin(which, on=True):
-    GPIO.output(which, ON if on else OFF)
-
-
-def red(on=True):
-    pin(LED_R, on)
-
-
-def green(on=True):
-    pin(LED_G, on)
-
-
-def blue(on=True):
-    pin(LED_B, on)
-
-
-def alloff():
-    [pin(p, OFF) for p in ALL_LEDS]
 
 
 def main():
@@ -63,7 +20,7 @@ def main():
 
     plugin = __import__('plugins', fromlist=[opts.plugin])
 
-    setup()
+    control.setup()
     plugin.setup()
 
     logging.info("Starting...")
@@ -82,7 +39,7 @@ def main():
     logging.info("done.")
 
     plugin.teardown()
-    teardown()
+    control.teardown()
 
 
 if __name__ == '__main__':

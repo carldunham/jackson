@@ -2,7 +2,7 @@
 import logging
 import time
 
-import leds
+import leds.control as leds
 
 INTERVAL = 0.5   # seconds
 
