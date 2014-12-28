@@ -20,11 +20,11 @@ logger = logging.getLogger(__name__)
 def setup():
     GPIO.setmode(GPIO.BCM)
 
-    alloff()
-
     GPIO.setup(LED_R, GPIO.OUT)
     GPIO.setup(LED_G, GPIO.OUT)
     GPIO.setup(LED_B, GPIO.OUT)
+
+    alloff()
 
 
 def teardown():
