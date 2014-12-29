@@ -21,17 +21,19 @@ _pause = False
 def _handle_button(button):
     logger.info("Button Press: %d", button)
 
+    global _pause
+    global _interval
+
     if button == control.RESET_BUTTON:
-        global _pause
         _pause = not _pause
 
     elif button == control.LEFT_BUTTON:
-        global _interval
         _interval = max(MIN_INTERVAL, _interval / 2.0)
 
     elif button == control.RIGHT_BUTTON:
-        global _interval
         _interval = min(MAX_INTERVAL, _interval * 2.0)
+
+    logger.debug("pause=%s, interval=%f", _pause, _interval)
 
 
 def main():
