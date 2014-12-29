@@ -20,6 +20,12 @@ ALL_BUTTONS = [RESET_BUTTON, LEFT_BUTTON, RIGHT_BUTTON]
 logger = logging.getLogger(__name__)
 
 
+# just make sure bounces on release don't trigger falling
+#
+def _filter_bounces(channel):
+    pass
+
+
 def setup(button_function=None):
     GPIO.setmode(GPIO.BCM)
 
@@ -31,6 +37,7 @@ def setup(button_function=None):
 
         for b in ALL_BUTTONS:
             logger.debug("setting up callback on button %d", b)
+            GPIO.add_event_detect(b, GPIO.RISING, callback=_filter_bounces, bouncetime=200)
             GPIO.add_event_detect(b, GPIO.FALLING, callback=button_function, bouncetime=200)
 
 
