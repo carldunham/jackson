@@ -45,7 +45,7 @@ def setup(button_function=None):
     _callbacks = []
 
     if button_function:
-        _callbacks += button_function
+        _callbacks.append(button_function)
 
         for b in ALL_BUTTONS:
             logger.debug("setting up callback on button %d", b)
