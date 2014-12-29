@@ -1,5 +1,6 @@
 
 import logging
+import time
 import RPi.GPIO as GPIO
 
 ON = GPIO.HIGH
@@ -19,11 +20,18 @@ ALL_BUTTONS = [RESET_BUTTON, LEFT_BUTTON, RIGHT_BUTTON]
 
 logger = logging.getLogger(__name__)
 
+# an array, in case we want to support multiple later
+_callbacks = []
+
 
 # just make sure bounces on release don't trigger falling
 #
 def _filter_bounces(channel):
-    pass
+    time.sleep(0.2)
+
+    if get(channel) == OFF:
+        global _callbacks
+        [cb(channel) for cb in _callbacks]
 
 
 def setup(button_function=None):
@@ -33,16 +41,23 @@ def setup(button_function=None):
 
     GPIO.setup(ALL_BUTTONS, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
+    global _callbacks
+    _callbacks = []
+
     if button_function:
+        _callbacks += button_function
 
         for b in ALL_BUTTONS:
             logger.debug("setting up callback on button %d", b)
-            GPIO.add_event_detect(b, GPIO.RISING, callback=_filter_bounces, bouncetime=200)
-            GPIO.add_event_detect(b, GPIO.FALLING, callback=button_function, bouncetime=200)
+            GPIO.add_event_detect(b, GPIO.BOTH, callback=_filter_bounces, bouncetime=200)
 
 
 def teardown():
     alloff()
+
+    global _callbacks
+    _callbacks = []
+
     GPIO.cleanup()
 
 
