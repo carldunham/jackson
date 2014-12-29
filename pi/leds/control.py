@@ -27,9 +27,12 @@ _callbacks = []
 # just make sure bounces on release don't trigger falling
 #
 def _filter_bounces(channel):
+    logger.debug("raw event on button %d, value=%s", channel, get(channel))
     time.sleep(0.2)
 
-    if get(channel) == OFF:
+    logger.debug("  after sleep, value=%s", get(channel))
+
+    if not get(channel):
         global _callbacks
         [cb(channel) for cb in _callbacks]
 
@@ -49,7 +52,8 @@ def setup(button_function=None):
 
         for b in ALL_BUTTONS:
             logger.debug("setting up callback on button %d", b)
-            GPIO.add_event_detect(b, GPIO.BOTH, callback=_filter_bounces, bouncetime=200)
+            # GPIO.add_event_detect(b, GPIO.FALLING, callback=_filter_bounces, bouncetime=300)
+            GPIO.add_event_detect(b, GPIO.FALLING, callback=button_function, bouncetime=300)
 
 
 def teardown():
