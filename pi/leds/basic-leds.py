@@ -11,8 +11,8 @@ logger = logging.getLogger(__name__)
 
 DEFAULT_INTERVAL = 0.5   # seconds
 
-MIN_INTERVAL = 0.01
-MAX_INTERVAL = 8
+MIN_INTERVAL = 0.001
+MAX_INTERVAL = 4
 
 _interval = DEFAULT_INTERVAL
 _pause = False
@@ -27,10 +27,10 @@ def _handle_button(button):
     if button == control.RESET_BUTTON:
         _pause = not _pause
 
-    elif button == control.LEFT_BUTTON:
+    elif button == control.RIGHT_BUTTON:
         _interval = max(MIN_INTERVAL, _interval / 2.0)
 
-    elif button == control.RIGHT_BUTTON:
+    elif button == control.LEFT_BUTTON:
         _interval = min(MAX_INTERVAL, _interval * 2.0)
 
     logger.debug("pause=%s, interval=%f", _pause, _interval)
