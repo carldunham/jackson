@@ -31,7 +31,7 @@ def setup(button_function=None):
 
         for b in ALL_BUTTONS:
             logger.debug("setting up callback on button %d", b)
-            GPIO.add_event_detect(b, GPIO.FALLING, callback=button_function)
+            GPIO.add_event_detect(b, GPIO.FALLING, callback=button_function, bouncetime=200)
 
 
 def teardown():
