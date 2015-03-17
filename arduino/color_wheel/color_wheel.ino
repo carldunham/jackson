@@ -50,7 +50,7 @@ void setup() {
 }
 
 void loop() {
-  rainbow();
+  wheel();
 }
 
 void test() {
@@ -62,7 +62,7 @@ void test() {
   delay(100);
 }
 
-void rainbow() {
+void wheel() {
   //The Hue value will vary from 0 to 360, which represents degrees in the color wheel
   for(int hue=0;hue<360;hue++) {
     setLedColorHSV(hue,1,1); //We are using Saturation and Value constant at 1
